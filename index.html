@@ -38,6 +38,7 @@
         /* Pour les images */
         .left img {
             width: 100%;
+            max-width: 200px;  /* Limite la taille de l'image */
             height: auto;
         }
 
@@ -123,8 +124,8 @@
             <div class="right">
                 <button class="form-button" onclick="toggleForm()">Formulaire de Contact</button>
 
-                <!-- Formulaire de contact -->
-                <form id="contact-form" action="send_email.php" method="POST">
+                <!-- Formulaire de contact avec Formspree -->
+                <form action="https://formspree.io/f/mqaepgdp" method="POST" id="contact-form">
                     <div>
                         <label for="nom">Nom (obligatoire):</label>
                         <input type="text" id="nom" name="nom" required>

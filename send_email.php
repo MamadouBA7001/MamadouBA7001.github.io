@@ -1,7 +1,6 @@
 <?php
-// Vérifiez que le formulaire a été soumis
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Récupérez les données du formulaire
+    // Récupération des données du formulaire
     $nom = htmlspecialchars($_POST['nom']);
     $prenom = htmlspecialchars($_POST['prenom']);
     $telephone = htmlspecialchars($_POST['telephone']);
@@ -10,13 +9,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $structure = htmlspecialchars($_POST['structure']);
     $commentaires = htmlspecialchars($_POST['commentaires']);
 
-    // Email où vous recevrez les messages
+    // Destinataire de l'email
     $destinataire = "mamadouba7001@gmail.com";
 
-    // Sujet du mail
+    // Sujet du message
     $sujet = "Nouveau message de contact depuis votre site";
 
-    // Contenu de l'email
+    // Corps du message
     $message = "
     <html>
     <head>
@@ -34,19 +33,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </html>
     ";
 
-    // Headers pour envoyer l'email en format HTML
+    // Entêtes de l'email (en HTML)
     $headers = "MIME-Version: 1.0" . "\r\n";
     $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
     $headers .= "From: <$email>" . "\r\n";
 
-    // Envoyer l'email
+    // Envoi de l'email
     if (mail($destinataire, $sujet, $message, $headers)) {
         echo "Merci d'avoir rempli ce formulaire. Vous recevrez une réponse très prochainement.";
     } else {
         echo "Une erreur s'est produite lors de l'envoi du formulaire. Veuillez réessayer.";
     }
 
-    // Réponse automatique à l'utilisateur
+    // Envoi de la confirmation à l'utilisateur
     $sujet_user = "Confirmation de réception de votre message";
     $message_user = "
     <html>
@@ -65,7 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </html>
     ";
 
-    // Envoyer l'email de confirmation
+    // Envoi de l'email de confirmation à l'utilisateur
     mail($email, $sujet_user, $message_user, $headers);
 } else {
     echo "Méthode non autorisée.";

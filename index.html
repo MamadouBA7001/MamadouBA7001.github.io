@@ -4,27 +4,62 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CV de Monsieur BA Mamadou</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        h1, p {
+            margin: 20px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0 0 20px 0;
+        }
+        ul li a {
+            text-decoration: none;
+            color: blue;
+            font-size: 18px;
+        }
+        #map-container {
+            margin-top: 50px;
+        }
+        #map-title {
+            font-size: 22px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        iframe {
+            width: 100%;
+            height: calc(100vh - 300px); /* Ajustez la hauteur pour s'adapter à votre page */
+            border: none;
+        }
+    </style>
 </head>
-<body style="font-family: Arial, sans-serif; text-align: center; margin: 20px;">
+<body>
     <h1>Bonjour,</h1>
     <p>Merci de consulter le CV de <strong>Monsieur BA Mamadou</strong>.</p>
     <p>Vous pouvez regarder :</p>
-    <ul style="list-style-type: none; padding: 0;">
+    <ul>
         <li>
             <a href="https://www.linkedin.com/in/mamadou-ba-g%C3%A9omatique-t%C3%A9l%C3%A9d%C3%A9tection/" 
-               target="_blank" 
-               style="text-decoration: none; color: blue; font-size: 18px;">
+               target="_blank">
                 Mon profil LinkedIn
             </a>
         </li>
         <li>
             <a href="https://github.com/Mouhamedba49/projetetudestage" 
-               target="_blank" 
-               style="text-decoration: none; color: blue; font-size: 18px;">
+               target="_blank">
                 Mes projets d'études et de stages
             </a>
         </li>
     </ul>
-    <p>Merci d'avance.</p>
+    <div id="map-container">
+        <p id="map-title">Répartition des mes structures d'études, de stages et de travail</p>
+        <iframe src="webmap/index.html"></iframe>
+    </div>
 </body>
 </html>

@@ -9,22 +9,43 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
+        }
+
+        /* Layout global */
+        .container {
             display: flex;
             flex-direction: column;
+            height: 100vh;
         }
-        header {
+
+        /* Division en deux parties */
+        .top-section {
             display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            padding: 10px 20px;
+            flex: 1;
+            border-bottom: 2px solid #ccc;
         }
-        #profile {
-            text-align: left;
+
+        .bottom-section {
+            flex: 1;
         }
+
+        /* Colonnes dans la première partie */
+        .column {
+            flex: 1;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .column-left, .column-right {
+            text-align: center;
+        }
+
+        /* Photo et lien vers le CV */
         #profile img {
             width: 150px;
             border-radius: 50%;
         }
+
         #profile a {
             display: block;
             margin-top: 10px;
@@ -32,20 +53,48 @@
             font-size: 16px;
             color: blue;
         }
+
+        /* Message de bienvenue */
+        #welcome {
+            text-align: center;
+        }
+
+        #welcome ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        #welcome ul li a {
+            text-decoration: none;
+            color: blue;
+            font-size: 18px;
+        }
+
+        /* Formulaire déroulant */
+        #contact-form-wrapper {
+            text-align: center;
+        }
+
         #contact-form {
+            display: none; /* Masqué par défaut */
             max-width: 300px;
+            margin: 0 auto;
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 10px;
             background: #f9f9f9;
         }
+
         #contact-form h3 {
             text-align: center;
         }
+
         #contact-form label {
             display: block;
             margin: 5px 0 2px;
         }
+
         #contact-form input, 
         #contact-form textarea, 
         #contact-form select {
@@ -55,6 +104,7 @@
             border: 1px solid #ccc;
             border-radius: 5px;
         }
+
         #contact-form button {
             width: 100%;
             padding: 10px;
@@ -64,18 +114,23 @@
             border-radius: 5px;
             cursor: pointer;
         }
-        #map-container {
-            margin-top: 20px;
-        }
-        #map-title {
-            font-size: 22px;
-            margin-bottom: 10px;
-            font-weight: bold;
-        }
+
+        /* Carte Web */
         iframe {
             width: 100%;
-            height: calc(100vh - 300px);
+            height: 100%;
             border: none;
+        }
+
+        /* Bouton pour afficher/masquer le formulaire */
+        #toggle-form-btn {
+            background: blue;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 10px;
         }
     </style>
     <!-- Ajout d'EmailJS pour gérer les envois de formulaire -->
@@ -84,11 +139,19 @@
         (function () {
             emailjs.init("YOUR_EMAILJS_USER_ID"); // Remplacez par votre USER_ID EmailJS
         })();
-        
+
+        function toggleForm() {
+            const form = document.getElementById('contact-form');
+            if (form.style.display === 'none') {
+                form.style.display = 'block';
+            } else {
+                form.style.display = 'none';
+            }
+        }
+
         function sendEmail(event) {
             event.preventDefault();
 
-            // Validation des champs obligatoires
             const nom = document.getElementById('nom').value;
             const prenom = document.getElementById('prenom').value;
             const email = document.getElementById('email').value;
@@ -98,7 +161,6 @@
                 return;
             }
 
-            // Envoyer l'email via EmailJS
             emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", {
                 nom: nom,
                 prenom: prenom,
@@ -119,46 +181,77 @@
     </script>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <!-- Photo et lien vers le CV -->
-        <div id="profile">
-            <img src="Mamadou_BA.jpg" alt="Photo de Mamadou BA">
-            <a href="BA_Mamadou_CV.pdf" target="_blank">Mon CV</a>
+    <div class="container">
+        <!-- Première partie -->
+        <div class="top-section">
+            <!-- Colonne gauche -->
+            <div class="column column-left">
+                <div id="profile">
+                    <img src="Mamadou_BA.jpg" alt="Photo de Mamadou BA">
+                    <a href="BA_Mamadou_CV.pdf" target="_blank">Mon CV</a>
+                </div>
+            </div>
+
+            <!-- Colonne centrale -->
+            <div class="column">
+                <div id="welcome">
+                    <h1>Bonjour,</h1>
+                    <p>Merci de consulter le CV de <strong>Monsieur BA Mamadou</strong>.</p>
+                    <p>Vous pouvez regarder :</p>
+                    <ul>
+                        <li>
+                            <a href="https://www.linkedin.com/in/mamadou-ba-g%C3%A9omatique-t%C3%A9l%C3%A9d%C3%A9tection/" 
+                               target="_blank">
+                                Mon profil LinkedIn
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://github.com/Mouhamedba49/projetetudestage" 
+                               target="_blank">
+                                Mes projets d'études et de stages
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Colonne droite -->
+            <div class="column column-right">
+                <div id="contact-form-wrapper">
+                    <button id="toggle-form-btn" onclick="toggleForm()">Contactez-moi</button>
+                    <form id="contact-form" onsubmit="sendEmail(event)">
+                        <h3>Contactez-moi</h3>
+                        <label for="nom">Nom *</label>
+                        <input type="text" id="nom" name="nom" required>
+
+                        <label for="prenom">Prénom *</label>
+                        <input type="text" id="prenom" name="prenom" required>
+
+                        <label for="telephone">Téléphone</label>
+                        <input type="text" id="telephone" name="telephone">
+
+                        <label for="email">Email *</label>
+                        <input type="email" id="email" name="email" required>
+
+                        <label for="statut">Statut</label>
+                        <input type="text" id="statut" name="statut">
+
+                        <label for="structure">Structure</label>
+                        <input type="text" id="structure" name="structure">
+
+                        <label for="commentaires">Commentaires</label>
+                        <textarea id="commentaires" name="commentaires" rows="4"></textarea>
+
+                        <button type="submit">Envoyer</button>
+                    </form>
+                </div>
+            </div>
         </div>
 
-        <!-- Formulaire de contact -->
-        <form id="contact-form" onsubmit="sendEmail(event)">
-            <h3>Contactez-moi</h3>
-            <label for="nom">Nom *</label>
-            <input type="text" id="nom" name="nom" required>
-
-            <label for="prenom">Prénom *</label>
-            <input type="text" id="prenom" name="prenom" required>
-
-            <label for="telephone">Téléphone</label>
-            <input type="text" id="telephone" name="telephone">
-
-            <label for="email">Email *</label>
-            <input type="email" id="email" name="email" required>
-
-            <label for="statut">Statut</label>
-            <input type="text" id="statut" name="statut">
-
-            <label for="structure">Structure</label>
-            <input type="text" id="structure" name="structure">
-
-            <label for="commentaires">Commentaires</label>
-            <textarea id="commentaires" name="commentaires" rows="4"></textarea>
-
-            <button type="submit">Envoyer</button>
-        </form>
-    </header>
-
-    <!-- Section de la carte -->
-    <div id="map-container">
-        <p id="map-title">Répartition des mes structures d'études, de stages et de travail</p>
-        <iframe src="webmap/index.html"></iframe>
+        <!-- Deuxième partie -->
+        <div class="bottom-section">
+            <iframe src="webmap/index.html"></iframe>
+        </div>
     </div>
 </body>
 </html>

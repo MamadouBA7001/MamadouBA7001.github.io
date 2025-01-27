@@ -9,23 +9,63 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
+            display: flex;
+            flex-direction: column;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 10px 20px;
+        }
+        #profile {
+            text-align: left;
+        }
+        #profile img {
+            width: 150px;
+            border-radius: 50%;
+        }
+        #profile a {
+            display: block;
+            margin-top: 10px;
+            text-decoration: none;
+            font-size: 16px;
+            color: blue;
+        }
+        #contact-form {
+            max-width: 300px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background: #f9f9f9;
+        }
+        #contact-form h3 {
             text-align: center;
         }
-        h1, p {
-            margin: 20px;
+        #contact-form label {
+            display: block;
+            margin: 5px 0 2px;
         }
-        ul {
-            list-style-type: none;
-            padding: 0;
-            margin: 0 0 20px 0;
+        #contact-form input, 
+        #contact-form textarea, 
+        #contact-form select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
         }
-        ul li a {
-            text-decoration: none;
-            color: blue;
-            font-size: 18px;
+        #contact-form button {
+            width: 100%;
+            padding: 10px;
+            background: blue;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
         }
         #map-container {
-            margin-top: 50px;
+            margin-top: 20px;
         }
         #map-title {
             font-size: 22px;
@@ -34,29 +74,88 @@
         }
         iframe {
             width: 100%;
-            height: calc(100vh - 300px); /* Ajustez la hauteur pour s'adapter à votre page */
+            height: calc(100vh - 300px);
             border: none;
         }
     </style>
+    <!-- Ajout d'EmailJS pour gérer les envois de formulaire -->
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@2.4.1/dist/email.min.js"></script>
+    <script>
+        (function () {
+            emailjs.init("YOUR_EMAILJS_USER_ID"); // Remplacez par votre USER_ID EmailJS
+        })();
+        
+        function sendEmail(event) {
+            event.preventDefault();
+
+            // Validation des champs obligatoires
+            const nom = document.getElementById('nom').value;
+            const prenom = document.getElementById('prenom').value;
+            const email = document.getElementById('email').value;
+
+            if (!nom || !prenom || !email) {
+                alert('Veuillez remplir les champs obligatoires : Nom, Prénom, et Email.');
+                return;
+            }
+
+            // Envoyer l'email via EmailJS
+            emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", {
+                nom: nom,
+                prenom: prenom,
+                telephone: document.getElementById('telephone').value,
+                email: email,
+                statut: document.getElementById('statut').value,
+                structure: document.getElementById('structure').value,
+                commentaires: document.getElementById('commentaires').value,
+            })
+            .then(() => {
+                alert("Merci d'avoir rempli ce formulaire. Vous recevrez une réponse très prochainement.");
+                document.getElementById('contact-form').reset();
+            })
+            .catch(() => {
+                alert("Une erreur s'est produite lors de l'envoi du formulaire. Veuillez réessayer.");
+            });
+        }
+    </script>
 </head>
 <body>
-    <h1>Bonjour,</h1>
-    <p>Merci de consulter le CV de <strong>Monsieur BA Mamadou</strong>.</p>
-    <p>Vous pouvez regarder :</p>
-    <ul>
-        <li>
-            <a href="https://www.linkedin.com/in/mamadou-ba-g%C3%A9omatique-t%C3%A9l%C3%A9d%C3%A9tection/" 
-               target="_blank">
-                Mon profil LinkedIn
-            </a>
-        </li>
-        <li>
-            <a href="https://github.com/Mouhamedba49/projetetudestage" 
-               target="_blank">
-                Mes projets d'études et de stages
-            </a>
-        </li>
-    </ul>
+    <!-- Header -->
+    <header>
+        <!-- Photo et lien vers le CV -->
+        <div id="profile">
+            <img src="Mamadou_BA.jpg" alt="Photo de Mamadou BA">
+            <a href="BA_Mamadou_CV.pdf" target="_blank">Mon CV</a>
+        </div>
+
+        <!-- Formulaire de contact -->
+        <form id="contact-form" onsubmit="sendEmail(event)">
+            <h3>Contactez-moi</h3>
+            <label for="nom">Nom *</label>
+            <input type="text" id="nom" name="nom" required>
+
+            <label for="prenom">Prénom *</label>
+            <input type="text" id="prenom" name="prenom" required>
+
+            <label for="telephone">Téléphone</label>
+            <input type="text" id="telephone" name="telephone">
+
+            <label for="email">Email *</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="statut">Statut</label>
+            <input type="text" id="statut" name="statut">
+
+            <label for="structure">Structure</label>
+            <input type="text" id="structure" name="structure">
+
+            <label for="commentaires">Commentaires</label>
+            <textarea id="commentaires" name="commentaires" rows="4"></textarea>
+
+            <button type="submit">Envoyer</button>
+        </form>
+    </header>
+
+    <!-- Section de la carte -->
     <div id="map-container">
         <p id="map-title">Répartition des mes structures d'études, de stages et de travail</p>
         <iframe src="webmap/index.html"></iframe>

@@ -14,26 +14,38 @@
             flex-direction: column;
             align-items: center;
         }
-        
+
+        /* Conteneur principal */
         .container {
-            display: flex;
-            justify-content: space-between;
             width: 90%;
             margin-top: 20px;
         }
 
         /* Première partie : Trois colonnes */
-        .left, .middle, .right {
+        .first-part {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .first-part .left,
+        .first-part .middle,
+        .first-part .right {
             width: 30%;
             padding: 10px;
         }
 
-        /* Pour le formulaire déroulant */
+        /* Pour les images */
+        .left img {
+            width: 100%;
+            height: auto;
+        }
+
+        /* Formulaire déroulant */
         #contact-form {
             display: none;
         }
 
-        /* Pour afficher le formulaire quand cliqué */
         .form-button {
             margin-top: 20px;
             padding: 10px;
@@ -55,20 +67,19 @@
             font-size: 16px;
         }
 
-        /* Carte (webmap) */
-        #map-container {
+        /* Deuxième partie : Webmap */
+        .second-part {
             width: 100%;
-            height: 500px;
             margin-top: 20px;
         }
-        
+
         iframe {
             width: 100%;
-            height: 100%;
+            height: 500px;
             border: none;
         }
 
-        /* Pour les liens */
+        /* Liens et texte */
         a {
             color: blue;
             text-decoration: none;
@@ -81,74 +92,77 @@
     </style>
 </head>
 <body>
-    <!-- Première partie : Photo, CV, Profil LinkedIn et Formulaire -->
     <div class="container">
-        <!-- Première colonne : Photo -->
-        <div class="left">
-            <img src="Mamadou_BA.jpg" alt="Photo de Mamadou BA" style="width: 100%; height: auto;">
+        <!-- Première partie : Trois colonnes -->
+        <div class="first-part">
+            <!-- Première colonne : Photo -->
+            <div class="left">
+                <img src="Mamadou_BA.jpg" alt="Photo de Mamadou BA">
+                <a href="BA_Mamadou_CV.pdf" target="_blank">Mon CV</a>
+            </div>
+
+            <!-- Deuxième colonne : Liens -->
+            <div class="middle">
+                <h1>Bonjour,</h1>
+                <p>Merci de consulter le CV de <strong>Monsieur BA Mamadou</strong>.</p>
+                <ul>
+                    <li>
+                        <a href="https://www.linkedin.com/in/mamadou-ba-g%C3%A9omatique-t%C3%A9l%C3%A9d%C3%A9tection/" target="_blank">
+                            Mon profil LinkedIn
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/Mouhamedba49/projetetudestage" target="_blank">
+                            Mes projets d'études et de stages
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Troisième colonne : Formulaire -->
+            <div class="right">
+                <button class="form-button" onclick="toggleForm()">Formulaire de Contact</button>
+
+                <!-- Formulaire de contact -->
+                <form id="contact-form" action="send_email.php" method="POST">
+                    <div>
+                        <label for="nom">Nom (obligatoire):</label>
+                        <input type="text" id="nom" name="nom" required>
+                    </div>
+                    <div>
+                        <label for="prenom">Prénom (obligatoire):</label>
+                        <input type="text" id="prenom" name="prenom" required>
+                    </div>
+                    <div>
+                        <label for="telephone">Téléphone :</label>
+                        <input type="tel" id="telephone" name="telephone">
+                    </div>
+                    <div>
+                        <label for="email">Email (obligatoire):</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div>
+                        <label for="statut">Statut :</label>
+                        <input type="text" id="statut" name="statut">
+                    </div>
+                    <div>
+                        <label for="structure">Structure :</label>
+                        <input type="text" id="structure" name="structure">
+                    </div>
+                    <div>
+                        <label for="commentaires">Commentaires :</label>
+                        <textarea id="commentaires" name="commentaires"></textarea>
+                    </div>
+                    <button type="submit">Envoyer</button>
+                </form>
+            </div>
         </div>
 
-        <!-- Deuxième colonne : Titre, Liens vers le CV et LinkedIn -->
-        <div class="middle">
-            <h1>Bonjour,</h1>
-            <p>Merci de consulter le CV de <strong>Monsieur BA Mamadou</strong>.</p>
-            <ul>
-                <li>
-                    <a href="https://www.linkedin.com/in/mamadou-ba-g%C3%A9omatique-t%C3%A9l%C3%A9d%C3%A9tection/" target="_blank">
-                        Mon profil LinkedIn
-                    </a>
-                </li>
-                <li>
-                    <a href="BA_Mamadou_CV.pdf" target="_blank">
-                        Mon CV
-                    </a>
-                </li>
-            </ul>
+        <!-- Deuxième partie : Webmap -->
+        <div class="second-part">
+            <p id="map-title">Répartition des mes structures d'études, de stages et de travail</p>
+            <iframe src="webmap/index.html"></iframe>
         </div>
-
-        <!-- Troisième colonne : Formulaire -->
-        <div class="right">
-            <button class="form-button" onclick="toggleForm()">Formulaire de Contact</button>
-            
-            <!-- Formulaire de contact -->
-            <form id="contact-form" action="send_email.php" method="POST">
-                <div>
-                    <label for="nom">Nom (obligatoire):</label>
-                    <input type="text" id="nom" name="nom" required>
-                </div>
-                <div>
-                    <label for="prenom">Prénom (obligatoire):</label>
-                    <input type="text" id="prenom" name="prenom" required>
-                </div>
-                <div>
-                    <label for="telephone">Téléphone :</label>
-                    <input type="tel" id="telephone" name="telephone">
-                </div>
-                <div>
-                    <label for="email">Email (obligatoire):</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-                <div>
-                    <label for="statut">Statut :</label>
-                    <input type="text" id="statut" name="statut">
-                </div>
-                <div>
-                    <label for="structure">Structure :</label>
-                    <input type="text" id="structure" name="structure">
-                </div>
-                <div>
-                    <label for="commentaires">Commentaires :</label>
-                    <textarea id="commentaires" name="commentaires"></textarea>
-                </div>
-                <button type="submit">Envoyer</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Deuxième partie : Webmap -->
-    <div id="map-container">
-        <p id="map-title">Répartition des mes structures d'études, de stages et de travail</p>
-        <iframe src="webmap/index.html"></iframe>
     </div>
 
     <script>
